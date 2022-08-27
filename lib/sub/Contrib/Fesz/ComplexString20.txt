@@ -1,0 +1,35 @@
+*Complex PhotoVoltaic panel library 06.2022 Fesz
+*
+.subckt LR4-60HBP-20 1 2 3;
+xu1 1 2 3 PV_cplx20 voc=2.55 isc=4.58 vmp=2.16 imp=4.15 tk_voc=-0.270 tk_isc=0.048
+.ends
+*
+*PhotoVoltaic Cell model
+*
+* necessary parameters
+*voc - open circuit voltage
+*isc - short circuit current
+*vmp - maximum power voltage
+*imp maximum power current
+*tk_voc - open circuit voltage temperature coeffiecient
+*tk_isc - short circuit current temperature coefficient
+*
+.subckt PV_cplx20 v+ v- illu
+D1 N002 v- pvdiode2
+Rsh N002 v- R=rsh_t
+Rs N002 v+ R=rs_t
+Bph v- N002 I=ipv_t*v(illu)/1000
+R5 illu 0 100meg
+.param voc_t voc*(1-tk_voc*(25-temp))
+.param isc_t isc*(1-tk_isc*(25-temp))
+.param vmp_t vmp*(1-tk_voc*(25-temp))
+.param imp_t imp*(1-tk_isc*(25-temp))
+.param rs_t (voc_t-vmp_t)/(16*imp_t) ; 2 instead of 16 in original source
+.param rsh_t 5*vmp_t/(isc_t-imp_t) ; 1 instead of 5 in original source
+.model PVDiode2 D(Is=io_t N=a_n Tnom=temp)
+.param io_t ((rs_t+rsh_t)*isc_t-voc_t)/(rsh_t*exp(voc_t/(a_n*vt_t)))
+.param vt_t (1.38e-23*(273+temp))/1.6e-19
+.param ipv_t isc_t*(rsh_t+rs_t)/rsh_t
+.param a_n 1.3*voc/0.7
+*
+.ends
