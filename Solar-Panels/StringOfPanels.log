@@ -1,0 +1,27 @@
+Circuit: * D:\Solar-Panels\StringOfPanels.asc
+
+Direct Newton iteration for .op point succeeded.
+.step illu=200
+.step illu=400
+.step illu=600
+.step illu=800
+.step illu=1000
+
+Date: Tue Aug 30 09:41:52 2022
+Total elapsed time: 0.479 seconds.
+
+tnom = 27
+temp = 25
+method = modified trap
+totiter = 2109
+traniter = 2098
+tranpoints = 1045
+accept = 1045
+rejected = 0
+matrix size = 125
+fillins = 26
+solver = Normal
+Thread vector: 13.2/7.6[10] 1.7/2.0[1] 7.1/2.0[10] 0.2/1.2[1]  2592/500
+Matrix Compiler1: 6.87 KB object code size  1.6/0.7/[0.6]
+Matrix Compiler2: 9.79 KB object code size  0.5/0.7/[0.5]
+
